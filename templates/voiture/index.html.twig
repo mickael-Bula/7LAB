@@ -1,24 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Voiture index{% endblock %}
+{% block title %}Liste des voitures{% endblock %}
 
 {% block body %}
-    <h1>Voiture index</h1>
+    <h1>Liste des voitures</h1>
 
     <h2 class="mt-5 mb-2">Filtrer par Constructeur</h2>
-    <div class="dropdown mb-5">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            Constructeurs
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            {% for constructor in constructors %}
 
-                <li><a class="dropdown-item" href="{{ path("app_filter", { "id": constructor.id }) }}">{{ constructor.name }}</a></li>
-            {% endfor %}
-
-
-        </ul>
-    </div>
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        <button type="submit" class="btn btn-primary">Filtrer</button>
+        {{ form_end(form) }}
 
     <table class="table">
         <thead>

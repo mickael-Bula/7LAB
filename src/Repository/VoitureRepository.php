@@ -39,6 +39,17 @@ class VoitureRepository extends ServiceEntityRepository
         }
     }
 
+    public function findCarsByConstructors($filters)
+    {
+        return $this->createQueryBuilder('v')
+            ->join('v.constructor', 'v_c')
+            ->andWhere('v_c IN (:vals)')
+            ->setParameter(':vals', array_values($filters))
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Voiture[] Returns an array of Voiture objects
 //     */
