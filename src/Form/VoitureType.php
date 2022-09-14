@@ -34,7 +34,7 @@ class VoitureType extends AbstractType
                 'choices' => [
                     'Sans plomb' => 'sans plomb',
                     'Diesel' => 'diesel',
-                    'électrique' => 'électrique',
+                    'Electrique' => 'électrique',
                 ]
             ])
         ;
