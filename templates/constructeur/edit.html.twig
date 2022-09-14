@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Constructeur{% endblock %}
+
+{% block body %}
+    <h1>Edit Constructeur</h1>
+
+    {{ include('constructeur/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_constructeur_index') }}">back to list</a>
+
+    {{ include('constructeur/_delete_form.html.twig') }}
+{% endblock %}

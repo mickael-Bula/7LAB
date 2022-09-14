@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Constructeur{% endblock %}
+
+{% block body %}
+    <h1>Create new Constructeur</h1>
+
+    {{ include('constructeur/_form.html.twig') }}
+
+    <a href="{{ path('app_constructeur_index') }}">back to list</a>
+{% endblock %}

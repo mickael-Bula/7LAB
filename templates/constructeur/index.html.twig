@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Constructeur index{% endblock %}
+
+{% block body %}
+    <h1>Constructeur index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Site</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for constructeur in constructeurs %}
+            <tr>
+                <td>{{ constructeur.id }}</td>
+                <td>{{ constructeur.name }}</td>
+                <td>{{ constructeur.country }}</td>
+                <td>{{ constructeur.site }}</td>
+                <td>
+                    <a href="{{ path('app_constructeur_show', {'id': constructeur.id}) }}">show</a>
+                    <a href="{{ path('app_constructeur_edit', {'id': constructeur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_constructeur_new') }}">Create new</a>
+{% endblock %}
