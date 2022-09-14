@@ -67,6 +67,9 @@ class VoitureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $voitureRepository->add($voiture, true);
 
+            // ajout d'un flashMessage signalant la modification
+            $this->addFlash('success', 'Le véhicule a été modifié avec succès !');
+
             return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
         }
 
