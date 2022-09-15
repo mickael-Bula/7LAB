@@ -7,7 +7,7 @@
 
     {{ include('voiture/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_voiture_index') }}">back to list</a>
+    <a role="button" aria-pressed="true" class="btn btn-primary px-4"  href="{{ path('app_home') }}">Accueil</a>
 
     {{ include('voiture/_delete_form.html.twig') }}
 {% endblock %}

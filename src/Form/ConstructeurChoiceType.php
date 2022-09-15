@@ -23,8 +23,7 @@ class ConstructeurChoiceType extends AbstractType
         $builder
             ->add('name', EntityType::class, [
                 'class' => Constructeur::class,
-                'placeholder' => 'Filtrez par constructeurs',
-                'label' => 'marques',
+                'label' => 'Constructeurs',
                 'choices' => $this->constructeurRepository->findAll(),
                 'choice_label' => 'name',
                 'multiple' => true,

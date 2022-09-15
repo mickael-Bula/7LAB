@@ -17,16 +17,20 @@ class HomeController extends AbstractController
      */
     public function index(Request $request, VoitureRepository $voitureRepository, ConstructeurRepository $constructeurRepository): Response
     {
+        // définition des variables pour la méthode GET
+        $voitures = $request->isMethod('GET') ? $voitureRepository->findAll() : null;
         $constructors = $constructeurRepository->findAll();
-        $voitures = $voitureRepository->findAll();
 
         $form = $this->createForm(ConstructeurChoiceType::class);
         $form->handleRequest($request);
+
+        // définition des variables pour la méthode POST
         if ($form->isSubmitted() && $form->isValid()) {
-            // récupération des "boxes checked", sinon on retourne tous les véhicules
-            $inputs = ($request->request->get("constructeur_choice")["name"]) ?? $constructeurRepository->findAll();
-            // il faut lancer une requête personnalisée avec le résultat d'input en paramètre
-            $voitures = $voitureRepository->findCarsByConstructors(array_values($inputs));
+
+            // récupération des "boxes checked" avec une requête personnalisée, sinon on retourne tous les véhicules
+            $inputs = $request->request->get("constructeur_choice")["name"] ?? null;
+            $voitures = isset($inputs) ? $voitureRepository->findCarsByConstructors(array_values($inputs)) : $voitureRepository->findAll();
+
             // il n'est pas possible de faire un redirectToRoute() lorsqu'on veut passer des arguments...
             return $this->renderForm('voiture/index.html.twig', [
                 'constructeurs' => $constructeurRepository->findAll(),

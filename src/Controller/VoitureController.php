@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Voiture;
 use App\Form\VoitureType;
-use App\Repository\ConstructeurRepository;
 use App\Repository\VoitureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,18 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class VoitureController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_voiture_index", methods={"GET"})
-     */
-    public function index(VoitureRepository $voitureRepository, ConstructeurRepository $constructeurRepository): Response
-    {
-        $constructors = $constructeurRepository->findAll();
-        return $this->render('voiture/index.html.twig', [
-            'voitures' => $voitureRepository->findAll(),
-            'constructors' => $constructors,
-        ]);
-    }
-
     /**
      * @Route("/new", name="app_voiture_new", methods={"GET", "POST"})
      */
