@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\ConstructeurChoiceType;
+use App\Form\FuelChoiceType;
 use App\Repository\ConstructeurRepository;
 use App\Repository\VoitureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

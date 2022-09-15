@@ -6,6 +6,7 @@ use App\Entity\Constructeur;
 use App\Repository\ConstructeurRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,13 +24,22 @@ class ConstructeurChoiceType extends AbstractType
         $builder
             ->add('name', EntityType::class, [
                 'class' => Constructeur::class,
-                'label' => 'Constructeurs',
                 'choices' => $this->constructeurRepository->findAll(),
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
             ])
-
+            ->add('fuel', ChoiceType::class, [
+                // le champ 'fuel' n'existant pas dans l'entité, je demande à ce qu'il soit ignoré
+                'mapped' => false,
+                'choices' => [
+                    'sans plomb' => 0,
+                    'diesel' => 1,
+                    'électrique' => 2,
+                ],
+                'multiple' => true,
+                'expanded' => true,
+            ])
         ;
     }
 

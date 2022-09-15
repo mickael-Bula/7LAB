@@ -7,17 +7,31 @@
 
     <h2 class="mt-5 mb-2">Filtres</h2>
 
-    <div class="dropdown mb-5">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {{ form_start(form) }}
-            {{ form_row(form.name) }}
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="dropdown mb-5 col-4">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Constructeur
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                {{ form_row(form.name) }}
+
+            </div>
+        </div>
+        <div class="dropdown mb-5 col-4">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Carburant
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                {{ form_row(form.fuel) }}
+
+            </div>
             <button type="submit" class="btn btn-primary">Filtrer</button>
-            {{ form_end(form) }}
         </div>
     </div>
+    {{ form_end(form) }}
 
     <table class="table">
         <thead>
