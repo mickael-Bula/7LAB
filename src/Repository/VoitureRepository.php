@@ -74,4 +74,13 @@ class VoitureRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findCarsByFuels(array $fuels)
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.energy IN (:vals)')
+            ->setParameter(':vals', array_values($fuels))
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

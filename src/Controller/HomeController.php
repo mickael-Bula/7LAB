@@ -29,8 +29,13 @@ class HomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // récupération des "boxes checked" avec une requête personnalisée, sinon on retourne tous les véhicules
-            $inputs = $request->request->get("constructeur_choice")["name"] ?? null;
-            $voitures = isset($inputs) ? $voitureRepository->findCarsByConstructors(array_values($inputs)) : $voitureRepository->findAll();
+//            $inputs = $request->request->get("constructeur_choice")["name"] ?? null;
+//            $voitures = isset($inputs) ? $voitureRepository->findCarsByConstructors(array_values($inputs)) : $voitureRepository->findAll();
+
+            // récupération des véhicules filtrés
+            $fuels = $request->request->get("constructeur_choice")["fuel"] ?? null;
+
+            $voitures = isset($fuels) ? $voitureRepository->findCarsByFuels(array_values($fuels)) : $voitureRepository->findAll();
 
             // il n'est pas possible de faire un redirectToRoute() lorsqu'on veut passer des arguments...
             return $this->renderForm('voiture/index.html.twig', [

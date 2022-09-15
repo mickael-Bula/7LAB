@@ -33,9 +33,9 @@ class ConstructeurChoiceType extends AbstractType
                 // le champ 'fuel' n'existant pas dans l'entité, je demande à ce qu'il soit ignoré
                 'mapped' => false,
                 'choices' => [
-                    'sans plomb' => 0,
-                    'diesel' => 1,
-                    'électrique' => 2,
+                    'sans plomb' => 'sans plomb',
+                    'diesel' => 'diesel',
+                    'électrique' => 'Electrique',
                 ],
                 'multiple' => true,
                 'expanded' => true,
