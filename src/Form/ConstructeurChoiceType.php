@@ -10,8 +10,14 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Ce formulaire permet de présenter deux menus déroulants, chacun contenant une liste de cases à cocher.
+ * À la soumission, une liste de véhicules filtrés est affichée en page d'accueil
+ *
+ */
 class ConstructeurChoiceType extends AbstractType
 {
+    // injection du repository pour pouvoir afficher la liste des constructeurs
     private $constructeurRepository;
 
     public function __construct(ConstructeurRepository $constructeurRepository)
@@ -35,7 +41,7 @@ class ConstructeurChoiceType extends AbstractType
                 'choices' => [
                     'sans plomb' => 'sans plomb',
                     'diesel' => 'diesel',
-                    'électrique' => 'Electrique',
+                    'électrique' => 'électrique',
                 ],
                 'multiple' => true,
                 'expanded' => true,

@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Constructeur{% endblock %}
+{% block title %}Modifier le Constructeur{% endblock %}
 
 {% block body %}
-    <h1>Edit Constructeur</h1>
+    <h1 class="text-center">Modifier un Constructeur</h1>
 
     {{ include('constructeur/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_constructeur_index') }}">back to list</a>
+    <a href="{{ path('app_constructeur_index') }}">Accueil</a>
 
     {{ include('constructeur/_delete_form.html.twig') }}
 {% endblock %}

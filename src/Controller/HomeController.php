@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Form\ConstructeurChoiceType;
-use App\Form\FuelChoiceType;
 use App\Repository\ConstructeurRepository;
 use App\Repository\VoitureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,16 +27,12 @@ class HomeController extends AbstractController
         // définition des variables pour la méthode POST
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // récupération des "boxes checked" avec une requête personnalisée, sinon on retourne tous les véhicules
-//            $inputs = $request->request->get("constructeur_choice")["name"] ?? null;
-//            $voitures = isset($inputs) ? $voitureRepository->findCarsByConstructors(array_values($inputs)) : $voitureRepository->findAll();
-
-            // récupération des véhicules filtrés
+            // récupération des véhicules à partir des filtres sélectionnés
+            $brands = $request->request->get("constructeur_choice")["name"] ?? null;
             $fuels = $request->request->get("constructeur_choice")["fuel"] ?? null;
+            $voitures = $voitureRepository->findCarsByFilters($brands, $fuels);
 
-            $voitures = isset($fuels) ? $voitureRepository->findCarsByFuels(array_values($fuels)) : $voitureRepository->findAll();
-
-            // il n'est pas possible de faire un redirectToRoute() lorsqu'on veut passer des arguments...
+            //!\\ il n'est pas possible de faire un redirectToRoute() lorsqu'on veut passer des arguments...
             return $this->renderForm('voiture/index.html.twig', [
                 'constructeurs' => $constructeurRepository->findAll(),
                 'form' => $form,

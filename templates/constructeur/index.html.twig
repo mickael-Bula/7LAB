@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Constructeur index{% endblock %}
+{% block title %}Liste des Constructeurs{% endblock %}
 
 {% block body %}
-    <h1>Constructeur index</h1>
+    <h1 class="text-center">Liste des Constructeurs</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Country</th>
+                <th>Nom</th>
+                <th>Pays</th>
                 <th>Site</th>
                 <th>actions</th>
             </tr>
@@ -23,17 +23,17 @@
                 <td>{{ constructeur.country }}</td>
                 <td>{{ constructeur.site }}</td>
                 <td>
-                    <a href="{{ path('app_constructeur_show', {'id': constructeur.id}) }}">show</a>
-                    <a href="{{ path('app_constructeur_edit', {'id': constructeur.id}) }}">edit</a>
+                    <a role="button" aria-pressed="true" class="btn btn-success" href="{{ path('app_constructeur_show', {'id': constructeur.id}) }}">Voir</a>
+                    <a role="button" aria-pressed="true" class="btn btn-warning" href="{{ path('app_constructeur_edit', {'id': constructeur.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">aucun constructeur trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_constructeur_new') }}">Create new</a>
+    <a role="button" aria-pressed="true" class="btn btn-primary" href="{{ path('app_constructeur_new') }}">Ajouter</a>
 {% endblock %}

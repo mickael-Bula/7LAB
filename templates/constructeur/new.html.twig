@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Constructeur{% endblock %}
+{% block title %}Ajouter un constructeur{% endblock %}
 
 {% block body %}
-    <h1>Create new Constructeur</h1>
+    <h1 class="text-center">Ajouter un Constructeur</h1>
 
     {{ include('constructeur/_form.html.twig') }}
 
-    <a href="{{ path('app_constructeur_index') }}">back to list</a>
+    <a role="button" aria-pressed="true" class="btn btn-primary" href="{{ path('app_constructeur_index') }}">Accueil</a>
 {% endblock %}

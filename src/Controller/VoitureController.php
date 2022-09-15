@@ -27,7 +27,7 @@ class VoitureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $voitureRepository->add($voiture, true);
 
-            return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('voiture/new.html.twig', [

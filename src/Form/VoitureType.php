@@ -22,6 +22,8 @@ class VoitureType extends AbstractType
                 'label' => 'le constructeur du véhicule',
                 'class' => Constructeur::class,
                 'choice_label' => 'name',
+                // le placeholder évite d'avoir un constructeur présélectionné
+                'placeholder' => 'Sélectionner un constructeur',
                 'multiple' => false,
                 'required' => true,
             ])
@@ -31,6 +33,8 @@ class VoitureType extends AbstractType
             ->add('seat', NumberType::class, ['label' => 'le nombre de sièges'])
             ->add('energy', ChoiceType::class, [
                 'label' => 'le carburant',
+                // le placeholder évite une sélection par défaut
+                'placeholder' => 'Choisir le carburant',
                 'choices' => [
                     'Sans plomb' => 'sans plomb',
                     'Diesel' => 'diesel',

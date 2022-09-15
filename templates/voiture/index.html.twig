@@ -3,13 +3,13 @@
 {% block title %}Liste des voitures{% endblock %}
 
 {% block body %}
-    <h1>Liste des voitures</h1>
+    <h1 class="text-center">Liste des voitures</h1>
 
     <h2 class="mt-5 mb-2">Filtres</h2>
 
     {{ form_start(form) }}
     <div class="row">
-        <div class="dropdown mb-5 col-4">
+        <div class="dropdown mb-5 col-auto">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Constructeur
             </button>
@@ -19,7 +19,7 @@
 
             </div>
         </div>
-        <div class="dropdown mb-5 col-4">
+        <div class="dropdown mb-5 col-auto">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Carburant
             </button>
@@ -28,7 +28,7 @@
                 {{ form_row(form.fuel) }}
 
             </div>
-            <button type="submit" class="btn btn-primary">Filtrer</button>
+            <button type="submit" class="btn btn-primary ms-4 px-4">Filtrer</button>
         </div>
     </div>
     {{ form_end(form) }}
