@@ -30,17 +30,15 @@ class HomeController extends AbstractController
             // récupération des véhicules à partir des filtres sélectionnés
             $brands = $request->request->get("constructeur_choice")["name"] ?? null;
             $fuels = $request->request->get("constructeur_choice")["fuel"] ?? null;
+
+            // je lance la requête avec les paramètres récupérés
             $voitures = $voitureRepository->findCarsByFilters($brands, $fuels);
 
+            // Ici je ne fais pas de redirection parce que je veux à afficher la même page
             //!\\ il n'est pas possible de faire un redirectToRoute() lorsqu'on veut passer des arguments...
-            return $this->renderForm('voiture/index.html.twig', [
-                'constructeurs' => $constructeurRepository->findAll(),
-                'form' => $form,
-                'voitures' => $voitures,
-            ]);
         }
 
-        return $this->renderForm('voiture/index.html.twig', [
+        return $this->renderForm('voiture/index.html.twig.', [
             'voitures' => $voitures,
             'constructors' => $constructors,
             'form' => $form,

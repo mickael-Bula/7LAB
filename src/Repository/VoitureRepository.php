@@ -62,8 +62,8 @@ class VoitureRepository extends ServiceEntityRepository
     public function findCarsByConstructorsAndFuels($constructors, $fuels)
     {
         return $this->createQueryBuilder('v')
-            ->join('v.constructor', 'v_c')
-            ->andWhere('v_c IN (:brands)')
+            // le join() est ici inutile parce que la recherche se fait par défaut sur 'constructor.id' et qu'on fournit un 'id' en paramètre
+            ->andWhere('v.constructor IN (:brands)')
             ->setParameter(':brands', array_values($constructors))
             ->andWhere('v.energy IN (:fuels)')
             ->setParameter(':fuels', array_values($fuels))
@@ -74,8 +74,9 @@ class VoitureRepository extends ServiceEntityRepository
     public function findCarsByConstructors($constructors)
     {
         return $this->createQueryBuilder('v')
-            ->join('v.constructor', 'v_c')
-            ->andWhere('v_c IN (:vals)')
+            // ici je présente la même requête en joignant explicitement sur constructor.id (qui est la recherche par défaut, donc inutile)
+            ->join('v.constructor', 'v_c')    // je joins la table (Doctrine utilisa l'id par défaut)
+            ->andWhere('v_c.id IN (:vals)')                 // je recherche sur le critère de l'id (donc redondant...)
             ->setParameter(':vals', array_values($constructors))
             ->getQuery()
             ->getResult();

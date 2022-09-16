@@ -12,6 +12,7 @@ class AppFixtures extends Fixture
         $faker = (new \Faker\Factory())::create();
         $faker->addProvider(new \Faker\Provider\Fakecar($faker));
 
+        // ces méthodes et propriétés ont beau être signalées commme introuvables, elles fonctionnent
         echo $faker->vehicle();
         echo $faker->vehicleModel;
         echo $faker->vehicleBrand;
