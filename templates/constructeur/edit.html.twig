@@ -7,7 +7,7 @@
 
     {{ include('constructeur/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_constructeur_index') }}">Accueil</a>
+    <a role="button" aria-pressed="true" class="btn btn-primary" href="{{ path('app_constructeur_index') }}">Accueil</a>
 
     {{ include('constructeur/_delete_form.html.twig') }}
 {% endblock %}

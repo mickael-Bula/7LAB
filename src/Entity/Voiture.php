@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\VoitureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=VoitureRepository::class)
@@ -19,11 +20,13 @@ class Voiture
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Veuillez saisir un modèle pour le véhicule")
      */
     private $model;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Saisissez la longueur du véhicule")
      */
     private $length;
 

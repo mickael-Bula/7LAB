@@ -17,7 +17,10 @@ class VoitureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('model', TextType::class, ['label' => 'le nom'])
+            ->add('model', TextType::class, [
+                'label' => 'le nom',
+                'empty_data' => '',
+            ])
             ->add('constructor', EntityType::class, [
                 'label' => 'le constructeur du véhicule',
                 'class' => Constructeur::class,
@@ -26,11 +29,23 @@ class VoitureType extends AbstractType
                 'placeholder' => 'Sélectionner un constructeur',
                 'multiple' => false,
                 'required' => true,
+                'empty_data' => '',
             ])
-            ->add('length',TextType::class, ['label' => 'la longueur'])
-            ->add('width',TextType::class, ['label' => 'la largeur'])
-            ->add('weight',TextType::class, ['label' => 'le poids'])
-            ->add('seat', NumberType::class, ['label' => 'le nombre de sièges'])
+            ->add('length',TextType::class, [
+                'label' => 'la longueur',
+            ])
+            ->add('width',TextType::class, [
+                'label' => 'la largeur',
+                'empty_data' => '',
+                ])
+            ->add('weight',TextType::class, [
+                'label' => 'le poids',
+                'empty_data' => '',
+                ])
+            ->add('seat', NumberType::class, [
+                'label' => 'le nombre de sièges',
+                'empty_data' => '',
+                ])
             ->add('energy', ChoiceType::class, [
                 'label' => 'le carburant',
                 // le placeholder évite une sélection par défaut
@@ -39,6 +54,7 @@ class VoitureType extends AbstractType
                     'Sans plomb' => 'sans plomb',
                     'Diesel' => 'diesel',
                     'Electrique' => 'électrique',
+                    'empty_data' => '',
                 ]
             ])
         ;
