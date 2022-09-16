@@ -7,6 +7,7 @@ use App\Entity\Voiture;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,20 +32,21 @@ class VoitureType extends AbstractType
                 'required' => true,
                 'empty_data' => '',
             ])
-            ->add('length',TextType::class, [
+            ->add('length',NumberType::class, [
                 'label' => 'la longueur',
-            ])
-            ->add('width',TextType::class, [
+                'invalid_message' => 'Veuillez saisir un nombre',])
+            ->add('width',NumberType::class, [
                 'label' => 'la largeur',
-                'empty_data' => '',
+                'invalid_message' => 'Veuillez saisir un nombre',
                 ])
-            ->add('weight',TextType::class, [
+            ->add('weight',NumberType::class, [
                 'label' => 'le poids',
-                'empty_data' => '',
+                'invalid_message' => 'Veuillez saisir un nombre',
                 ])
-            ->add('seat', NumberType::class, [
+            ->add('seat', IntegerType::class, [
                 'label' => 'le nombre de sièges',
-                'empty_data' => '',
+                // pour afficher un message quand le type saisi ne correspond au type attendu (ici un entier)
+                'invalid_message' => 'Veuillez saisir un nombre entier',
                 ])
             ->add('energy', ChoiceType::class, [
                 'label' => 'le carburant',

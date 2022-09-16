@@ -26,22 +26,27 @@ class Voiture
 
     /**
      * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="Saisissez la longueur du véhicule")
+     * @Assert\Type(type="float", message = "La valeur {{ value }} doit être de type {{ type }}")
+     * @Assert\NotBlank(message="Veuillez saisir la longueur du véhicule")
      */
     private $length;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Veuillez saisir une largeur pour le véhicule")
      */
     private $width;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Veuillez renseigner le poids du véhicule")
      */
     private $weight;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="integer", message = "La valeur {{ value }} doit être de type {{ type }}")
+     * @Assert\NotBlank(message="Veuillez le nombre de places assises")
      */
     private $seat;
 
@@ -78,7 +83,10 @@ class Voiture
         return $this->length;
     }
 
-    public function setLength(float $length): self
+    /*  J'ajoute un ? au type hinting pour gérer le cas d'un champ vide lors de l'édition d'un véhicule
+        Avec cette modification les contrôles de setters sont passés et l'on peut faire travailler les validators ( @Assert)
+     */
+    public function setLength(?float $length): self
     {
         $this->length = $length;
 
@@ -90,7 +98,7 @@ class Voiture
         return $this->width;
     }
 
-    public function setWidth(float $width): self
+    public function setWidth(?float $width): self
     {
         $this->width = $width;
 
@@ -102,7 +110,7 @@ class Voiture
         return $this->weight;
     }
 
-    public function setWeight(float $weight): self
+    public function setWeight(?float $weight): self
     {
         $this->weight = $weight;
 

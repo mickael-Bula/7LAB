@@ -13,7 +13,9 @@ class ConstructeurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name',TextType::class, ['label' => 'le nom'])
+            ->add('name',TextType::class, [
+                'label' => 'le nom',
+                'empty_data' => '',])
             ->add('country',TextType::class, [
                 'label' => 'le pays',
                 'empty_data' => '',

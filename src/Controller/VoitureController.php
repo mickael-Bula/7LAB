@@ -60,7 +60,7 @@ class VoitureController extends AbstractController
             // ajout d'un flashMessage signalant la modification
             $this->addFlash('success', 'Le véhicule a été modifié avec succès !');
 
-            return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('voiture/edit.html.twig', [
@@ -78,6 +78,6 @@ class VoitureController extends AbstractController
             $voitureRepository->remove($voiture, true);
         }
 
-        return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
     }
 }
