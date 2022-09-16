@@ -56,8 +56,8 @@ class VoitureType extends AbstractType
                     'Sans plomb' => 'sans plomb',
                     'Diesel' => 'diesel',
                     'Electrique' => 'électrique',
-                    'empty_data' => '',
-                ]
+                ],
+                'empty_data' => '',
             ])
         ;
     }
