@@ -13,7 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Ce formulaire permet de présenter deux menus déroulants, chacun contenant une liste de cases à cocher.
  * À la soumission, une liste de véhicules filtrés est affichée en page d'accueil
- *
  */
 class ConstructeurChoiceType extends AbstractType
 {
@@ -53,6 +52,8 @@ class ConstructeurChoiceType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Constructeur::class,
+            // Les champs non affichés étant considérés comme 'null', je dois désactiver la validation du formulaire
+            'validation_groups' => false,
         ]);
     }
 }

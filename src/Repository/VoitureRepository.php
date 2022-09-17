@@ -42,21 +42,14 @@ class VoitureRepository extends ServiceEntityRepository
     public function findCarsByFilters($constructors = null, $fuels = null)
     {
         // si les deux paramètres sont fournis
-        if (isset($constructors) && isset($fuels)) {
-            return $this->findCarsByConstructorsAndFuels($constructors, $fuels);
+        if (isset($constructors) && isset($fuels)) return $this->findCarsByConstructorsAndFuels($constructors, $fuels);
 
-            // si seul $constructors est fourni
-        } elseif (isset($constructors)) {
-            return $this->findCarsByConstructors($constructors);
+        // si seul le paramètre $constructors est fourni
+        elseif (isset($constructors)) return $this->findCarsByConstructors($constructors);
+        elseif (isset($fuels)) return $this->findCarsByFuels($fuels);
 
-            // si seul $fuels est fourni
-        } elseif (isset($fuels)) {
-            return $this->findCarsByFuels($fuels);
-
-            // sinon, si aucun paramètre n'est fourni, on retourne tous les véhicules
-        } else {
-            return $this->findAll();
-        }
+        // sinon, si aucun paramètre n'est fourni, on retourne tous les véhicules
+        else return $this->findAll();
     }
 
     public function findCarsByConstructorsAndFuels($constructors, $fuels)
