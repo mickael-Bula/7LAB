@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\VoitureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -15,12 +16,14 @@ class Voiture
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("log")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank(message="Veuillez saisir un modèle pour le véhicule")
+     * @Groups("log")
      */
     private $model;
 
@@ -28,18 +31,21 @@ class Voiture
      * @ORM\Column(type="float")
      * @Assert\Type(type="float", message = "La valeur {{ value }} doit être de type {{ type }}")
      * @Assert\NotBlank(message="Veuillez saisir la longueur du véhicule")
+     * @Groups("log")
      */
     private $length;
 
     /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Veuillez saisir une largeur pour le véhicule")
+     * @Groups("log")
      */
     private $width;
 
     /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Veuillez renseigner le poids du véhicule")
+     * @Groups("log")
      */
     private $weight;
 
@@ -47,17 +53,20 @@ class Voiture
      * @ORM\Column(type="integer")
      * @Assert\Type(type="integer", message = "La valeur {{ value }} doit être de type {{ type }}")
      * @Assert\NotBlank(message="Veuillez le nombre de places assises")
+     * @Groups("log")
      */
     private $seat;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups("log")
      */
     private $energy;
 
     /**
      * @ORM\ManyToOne(targetEntity=Constructeur::class, inversedBy="cars")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("log")
      */
     private $constructor;
 

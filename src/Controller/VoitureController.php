@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Voiture;
 use App\Form\VoitureType;
 use App\Repository\VoitureRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/voiture")
@@ -49,7 +51,12 @@ class VoitureController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_voiture_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Voiture $voiture, VoitureRepository $voitureRepository): Response
+    public function edit(Request $request,
+                         Voiture $voiture,
+                         VoitureRepository $voitureRepository,
+                         LoggerInterface $logger,
+                         SerializerInterface $serializer
+    ): Response
     {
         $form = $this->createForm(VoitureType::class, $voiture);
         $form->handleRequest($request);
@@ -59,6 +66,10 @@ class VoitureController extends AbstractController
 
             // ajout d'un flashMessage signalant la modification
             $this->addFlash('success', 'Le véhicule a été modifié avec succès !');
+
+            // ajout d'un log dans le fichier /var/log/dev.log
+            $jsonContent = $serializer->serialize($voiture, 'json', ['groups' => 'log']);
+            $logger->info($jsonContent);
 
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }

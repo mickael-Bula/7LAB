@@ -6,6 +6,7 @@ use App\Repository\ConstructeurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,18 +18,21 @@ class Constructeur
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("log")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank(message="Veuillez saisir un nom")
+     * @Groups("log")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank(message="Veuillez saisir un pays")
+     * @Groups("log")
      */
     private $country;
 
@@ -36,6 +40,7 @@ class Constructeur
      * @ORM\Column(type="string", length=150)
      * @Assert\NotBlank(message="Veuillez saisir un nom de site")
      * @Assert\Url(message="L'url {{ value }} n'est pas valide")
+     * @Groups("log")
      */
     private $site;
 
