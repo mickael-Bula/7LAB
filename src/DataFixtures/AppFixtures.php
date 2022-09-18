@@ -36,7 +36,7 @@ class AppFixtures extends Fixture
             $constructeur = new Constructeur();
             $constructeur->setName($constructor[0]);
             $constructeur->setCountry($constructor[1]);
-            $site = strtolower($constructor[0]) . '@gmail.com';
+            $site = 'https://' . strtolower($constructor[0]) . '.com';
             $constructeur->setSite($site);
 
             $this->fixtureBrands[] = $constructeur;

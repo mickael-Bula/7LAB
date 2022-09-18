@@ -41,6 +41,7 @@ class Constructeur
      * @Assert\NotBlank(message="Veuillez saisir un nom de site")
      * @Assert\Url(message="L'url {{ value }} n'est pas valide")
      * @Groups("car-edit")
+     * @Assert\Url(relativeProtocol=true)
      */
     private $site;
 

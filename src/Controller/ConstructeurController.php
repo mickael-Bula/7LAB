@@ -16,14 +16,24 @@ use Symfony\Contracts\Cache\CacheInterface;
  */
 class ConstructeurController extends AbstractController
 {
+    /** @var CacheInterface $cache */
+    private $cache;
+
+    public function __construct(CacheInterface $cache)
+    {
+        $this->cache = $cache;
+    }
+
     /**
      * @Route("/", name="app_constructeur_index", methods={"GET"})
      */
-    public function index(ConstructeurRepository $constructeurRepository, CacheInterface $cache): Response
+    public function index(ConstructeurRepository $constructeurRepository): Response
     {
-        $constructors = $cache->get('constructors', function() use ($constructeurRepository) {
+        // on retourne le contenu du cache soit directement, soit après avoir récupéré auprès de Doctrine si le cache est vide
+        $constructors = $this->cache->get('constructors', function() use ($constructeurRepository) {
             return $constructeurRepository->findAll();
         });
+
         return $this->render('constructeur/index.html.twig', [
             'constructeurs' => $constructors,
         ]);
@@ -40,6 +50,12 @@ class ConstructeurController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $constructeurRepository->add($constructeur, true);
+
+            // ajout d'un flashMessage signalant la création d'un constructeur
+            $this->addFlash("success", "Un nouveau constructeur à été ajouté");
+
+            // on supprime la clé récupérant la liste des constructeurs dans le cache qui n'est plus à jour
+            $this->cache->delete("constructors");
 
             return $this->redirectToRoute('app_constructeur_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -71,6 +87,12 @@ class ConstructeurController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $constructeurRepository->add($constructeur, true);
 
+            // ajout d'un flashMessage signalant la modification d'un constructeur
+            $this->addFlash("success", "Les modifications ont été enregistrées");
+
+            // on supprime la clé récupérant la liste des constructeurs dans le cache qui n'est plus à jour
+            $this->cache->delete("constructors");
+
             return $this->redirectToRoute('app_constructeur_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -87,6 +109,12 @@ class ConstructeurController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$constructeur->getId(), $request->request->get('_token'))) {
             $constructeurRepository->remove($constructeur, true);
+
+            // ajout d'un flashMessage signalant la suppression d'un constructeur
+            $this->addFlash("success", "Le constructeur a été supprimé");
+
+            // on supprime la clé récupérant la liste des constructeurs dans le cache qui n'est plus à jour
+            $this->cache->delete("constructors");
         }
 
         return $this->redirectToRoute('app_constructeur_index', [], Response::HTTP_SEE_OTHER);
