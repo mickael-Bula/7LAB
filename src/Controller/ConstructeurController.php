@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Constructeur;
 use App\Form\ConstructeurType;
 use App\Repository\ConstructeurRepository;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,7 @@ class ConstructeurController extends AbstractController
 
     /**
      * @Route("/", name="app_constructeur_index", methods={"GET"})
+     * @throws InvalidArgumentException
      */
     public function index(ConstructeurRepository $constructeurRepository): Response
     {
@@ -41,6 +43,7 @@ class ConstructeurController extends AbstractController
 
     /**
      * @Route("/new", name="app_constructeur_new", methods={"GET", "POST"})
+     * @throws InvalidArgumentException
      */
     public function new(Request $request, ConstructeurRepository $constructeurRepository): Response
     {
@@ -56,6 +59,9 @@ class ConstructeurController extends AbstractController
 
             // on supprime la clé récupérant la liste des constructeurs dans le cache qui n'est plus à jour
             $this->cache->delete("constructors");
+
+            // suppression également du cache des véhicules
+            $this->cache->delete('vehicles');
 
             return $this->redirectToRoute('app_constructeur_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -78,6 +84,7 @@ class ConstructeurController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_constructeur_edit", methods={"GET", "POST"})
+     * @throws InvalidArgumentException
      */
     public function edit(Request $request, Constructeur $constructeur, ConstructeurRepository $constructeurRepository): Response
     {
@@ -104,6 +111,7 @@ class ConstructeurController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_constructeur_delete", methods={"POST"})
+     * @throws InvalidArgumentException
      */
     public function delete(Request $request, Constructeur $constructeur, ConstructeurRepository $constructeurRepository): Response
     {
