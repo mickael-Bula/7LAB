@@ -23,6 +23,13 @@ when@dev:
                 process_psr_3_messages: false
                 channels: ["!event", "!doctrine", "!console"]
 
+            # mon gestionnaire personnalisé pour envoyer les logs dans le fichier jlog.json lors de l'édition d'un véhicule
+            edit_logging:
+                type: stream
+                path: "%kernel.project_dir%/jlog.json"
+                level: info
+                channels: ['app']
+
 when@test:
     monolog:
         handlers:

@@ -16,14 +16,14 @@ class Voiture
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("log")
+     * @Groups("car-edit")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank(message="Veuillez saisir un modèle pour le véhicule")
-     * @Groups("log")
+     * @Groups("car-edit")
      */
     private $model;
 
@@ -31,21 +31,21 @@ class Voiture
      * @ORM\Column(type="float")
      * @Assert\Type(type="float", message = "La valeur {{ value }} doit être de type {{ type }}")
      * @Assert\NotBlank(message="Veuillez saisir la longueur du véhicule")
-     * @Groups("log")
+     * @Groups("car-edit")
      */
     private $length;
 
     /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Veuillez saisir une largeur pour le véhicule")
-     * @Groups("log")
+     * @Groups("car-edit")
      */
     private $width;
 
     /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Veuillez renseigner le poids du véhicule")
-     * @Groups("log")
+     * @Groups("car-edit")
      */
     private $weight;
 
@@ -53,20 +53,20 @@ class Voiture
      * @ORM\Column(type="integer")
      * @Assert\Type(type="integer", message = "La valeur {{ value }} doit être de type {{ type }}")
      * @Assert\NotBlank(message="Veuillez le nombre de places assises")
-     * @Groups("log")
+     * @Groups("car-edit")
      */
     private $seat;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups("log")
+     * @Groups("car-edit")
      */
     private $energy;
 
     /**
      * @ORM\ManyToOne(targetEntity=Constructeur::class, inversedBy="cars")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups("log")
+     * @Groups("car-edit")
      */
     private $constructor;
 

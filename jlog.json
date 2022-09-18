@@ -1,0 +1,2 @@
+[2022-09-18T08:52:14.339776+00:00] app.INFO: {"id":29,"model":"X1","length":4.25,"width":1.77,"weight":1283,"seat":5,"energy":"diesel","constructor":{"id":20,"name":"BMW","country":"Allemagne","site":"bmw@gmail.com"}} [] []
+[2022-09-18T08:55:18.434007+00:00] app.INFO: {"id":30,"model":"Duster","length":3.98,"width":1.74,"weight":1303,"seat":4,"energy":"sans plomb","constructor":{"id":19,"name":"Dacia","country":"France","site":"dacia@gmail.com"}} [] []

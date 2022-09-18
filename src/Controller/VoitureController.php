@@ -68,7 +68,7 @@ class VoitureController extends AbstractController
             $this->addFlash('success', 'Le véhicule a été modifié avec succès !');
 
             // ajout d'un log dans le fichier /var/log/dev.log
-            $jsonContent = $serializer->serialize($voiture, 'json', ['groups' => 'log']);
+            $jsonContent = $serializer->serialize($voiture, 'json', ['groups' => 'car-edit']);
             $logger->info($jsonContent);
 
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);

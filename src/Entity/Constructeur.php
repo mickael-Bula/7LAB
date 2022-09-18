@@ -18,21 +18,21 @@ class Constructeur
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("log")
+     * @Groups("car-edit")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank(message="Veuillez saisir un nom")
-     * @Groups("log")
+     * @Groups("car-edit")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank(message="Veuillez saisir un pays")
-     * @Groups("log")
+     * @Groups("car-edit")
      */
     private $country;
 
@@ -40,7 +40,7 @@ class Constructeur
      * @ORM\Column(type="string", length=150)
      * @Assert\NotBlank(message="Veuillez saisir un nom de site")
      * @Assert\Url(message="L'url {{ value }} n'est pas valide")
-     * @Groups("log")
+     * @Groups("car-edit")
      */
     private $site;
 
