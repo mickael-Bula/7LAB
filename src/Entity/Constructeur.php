@@ -25,7 +25,7 @@ class Constructeur
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank(message="Veuillez saisir un nom")
-     * @Groups("car-edit")
+     * @Groups({ "car-edit", "constructors-filter" })
      */
     private $name;
 
