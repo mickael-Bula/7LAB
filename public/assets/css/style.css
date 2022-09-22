@@ -1,0 +1,18 @@
+/* FLASHBAG FADING
+animation qui fait disparaître le flashbag après 5s
+--------------------------------------------------- */
+
+.flashbag {
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: fading 6s ease;
+    opacity: 0;
+}
+
+@keyframes fading {
+    10% { opacity: 1; }
+    75% { opacity: 1; }
+    100% { opacity: 0; }
+}
