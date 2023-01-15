@@ -55,8 +55,9 @@ class HomeController extends AbstractController
             $brands = $request->request->get("constructeur_choice")["name"] ?? null;
             $fuels = $request->request->get("constructeur_choice")["fuel"] ?? null;
 
-            // appel de l'event dispatcher et dispatch de l'event déclarer dans le fichier config/services.yaml
-            $voitures = $this->eventDispatcher->dispatch(new GenericEvent(null, ['brands' => $brands, 'fuels' => $fuels]), 'filters');
+            // appel de l'event dispatcher et dispatch de l'event déclaré dans le fichier config/services.yaml
+            // Problème : le retour de l'appel au dispatcher nous donne une objet de cette classe et non le retour de la méthode qui est appellée par le service...
+            $this->eventDispatcher->dispatch(new GenericEvent(null, ['brands' => $brands, 'fuels' => $fuels]), 'filters');
 
             // Ici, je ne fais pas de redirection parce que je veux afficher la même page
             //!\\ il n'est pas possible de faire un redirectToRoute() lorsqu'on désire passer des arguments...
