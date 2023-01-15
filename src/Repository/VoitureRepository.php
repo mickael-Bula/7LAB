@@ -67,7 +67,7 @@ class VoitureRepository extends ServiceEntityRepository
     public function findCarsByConstructors($constructors)
     {
         return $this->createQueryBuilder('v')
-            // ici je présente la même requête en joignant explicitement sur constructor.id (qui est la recherche par défaut, donc inutile)
+            // ici, je présente la même requête en joignant explicitement sur constructor.id (qui est la recherche par défaut, donc inutile)
             ->join('v.constructor', 'v_c')    // je joins la table (Doctrine utilisa l'id par défaut)
             ->andWhere('v_c.id IN (:vals)')                 // je recherche sur le critère de l'id (donc redondant...)
             ->setParameter(':vals', array_values($constructors))

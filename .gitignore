@@ -20,3 +20,6 @@
 ###< symfony/phpunit-bridge ###
 
 /TODO.md
+
+.DS_Store
+.idea

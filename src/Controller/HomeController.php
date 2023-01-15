@@ -6,7 +6,9 @@ use App\Form\ConstructeurChoiceType;
 use App\Repository\ConstructeurRepository;
 use App\Repository\VoitureRepository;
 use Psr\Cache\InvalidArgumentException;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,15 +18,19 @@ class HomeController extends AbstractController
 {
     /** @var CacheInterface $cache Injection du cache dans le constructeur */
     private $cache;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
-    public function __construct(CacheInterface $cache)
+    public function __construct(CacheInterface $cache, EventDispatcherInterface $eventDispatcher)
     {
         $this->cache = $cache;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
      * @Route("/", name="app_home", methods={"GET", "POST"})
-     * @throws InvalidArgumentException
      */
     public function index(Request $request, VoitureRepository $voitureRepository, ConstructeurRepository $constructeurRepository): Response
     {
@@ -49,11 +55,11 @@ class HomeController extends AbstractController
             $brands = $request->request->get("constructeur_choice")["name"] ?? null;
             $fuels = $request->request->get("constructeur_choice")["fuel"] ?? null;
 
-            // je lance la requête avec les paramètres récupérés
-            $voitures = $voitureRepository->findCarsByFilters($brands, $fuels);
+            // appel de l'event dispatcher et dispatch de l'event déclarer dans le fichier config/services.yaml
+            $voitures = $this->eventDispatcher->dispatch(new GenericEvent(null, ['brands' => $brands, 'fuels' => $fuels]), 'filters');
 
-            // Ici je ne fais pas de redirection parce que je veux à afficher la même page
-            //!\\ il n'est pas possible de faire un redirectToRoute() lorsqu'on veut passer des arguments...
+            // Ici, je ne fais pas de redirection parce que je veux afficher la même page
+            //!\\ il n'est pas possible de faire un redirectToRoute() lorsqu'on désire passer des arguments...
         }
 
         return $this->renderForm('voiture/index.html.twig.', [
