@@ -25,11 +25,7 @@ class DispatcherService implements EventSubscriberInterface
 
     public function onFilters(GenericEvent $event)
     {
-        // je lance la requête avec les paramètres récupérés
-        $voitures = $this->voitureRepository->findCarsByFilters($event->getArguments()["brands"], $event->getArguments()["fuels"]);
-        // le service est bien appelé, cela fonctionne, mais je ne peux retourner le résultat vers la vue...
-        // C'est donc depuis le service que les actions doivent se faire, mais on ne retourne pas dans le controller...
-        dump($voitures);
-        return $voitures;
+        // je lance la requête avec les paramètres récupérés puis j'hydrate le tableau des arguments de l'objet $event pour transmettre au controller les données récupérées
+        $event['data'] = $this->voitureRepository->findCarsByFilters($event["brands"], $event["fuels"]);
     }
 }
