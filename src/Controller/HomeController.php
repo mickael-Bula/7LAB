@@ -19,7 +19,7 @@ class HomeController extends AbstractController
     /** @var CacheInterface $cache Injection du cache dans le constructeur */
     private $cache;
     /**
-     * @var EventDispatcherInterface
+     * @var EventDispatcherInterface $eventDispatcher Utilisation de l'eventDispatcher pour alléger le controller
      */
     private $eventDispatcher;
 
@@ -31,10 +31,15 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/", name="app_home", methods={"GET", "POST"})
+     * @throws InvalidArgumentException
      */
-    public function index(Request $request, VoitureRepository $voitureRepository, ConstructeurRepository $constructeurRepository): Response
+    public function index(
+        Request $request,
+        VoitureRepository $voitureRepository,
+        ConstructeurRepository $constructeurRepository
+    ): Response
     {
-        // récupération du cache des véhicules et des constructeurs
+        // Récupération du cache des véhicules et des constructeurs : si la clé n'est pas présente dans le cache, on lance la fonction de rappel en lui fournissant le repository
         $vehicles = $this->cache->get('vehicles', function() use ($voitureRepository) {
             return $voitureRepository->findAll();
         });
@@ -42,7 +47,7 @@ class HomeController extends AbstractController
             return $constructeurRepository->findAll();
         });
 
-        // définition de la variable $voitures pour la méthode GET
+        // définition de la variable $voitures pour la méthode GET (en GET aucun filtre n'étant activé, on récupère tous les véhicules)
         $voitures = $request->isMethod('GET') ? $vehicles : null;
 
         $form = $this->createForm(ConstructeurChoiceType::class);
@@ -51,15 +56,11 @@ class HomeController extends AbstractController
         // définition des variables pour la méthode POST
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // récupération des véhicules à partir des filtres sélectionnés
-            $brands = $request->request->get("constructeur_choice")["name"] ?? null;
-            $fuels = $request->request->get("constructeur_choice")["fuel"] ?? null;
-
             // appel de l'event dispatcher et dispatch de l'event déclaré dans le fichier config/services.yaml
-            $event = new GenericEvent(null, ['brands' => $brands, 'fuels' => $fuels, 'data' => '']);
+            $event = new GenericEvent($request);
             $this->eventDispatcher->dispatch($event, 'filters');
 
-            // Je récupère le résultat de la requête enregistrée dans l'objet $event
+            // Je récupère le résultat de la requête enregistrée dans l'objet $event (la clé "data" a été ajoutée depuis le service)
             $voitures = $event['data'];
 
             // Ici, je ne fais pas de redirection parce que je veux afficher la même page
