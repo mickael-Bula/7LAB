@@ -45,7 +45,7 @@ class VoitureType extends AbstractType
                 ])
             ->add('seat', IntegerType::class, [
                 'label' => 'le nombre de sièges',
-                // pour afficher un message quand le type saisi ne correspond au type attendu (ici un entier)
+                // pour afficher un message quand le type saisi ne correspond pas au type attendu (ici un entier)
                 'invalid_message' => 'Veuillez saisir un nombre entier',
                 ])
             ->add('energy', ChoiceType::class, [

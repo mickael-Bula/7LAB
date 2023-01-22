@@ -54,7 +54,7 @@ class ConstructeurChoiceType extends AbstractType
             'data_class' => Constructeur::class,
             // Les champs non affichés étant considérés comme 'null', je peux désactiver la validation du formulaire
             // 'validation_groups' => false,
-            // Ou mieux, je peux ne demander la validation que pour les champs affichés en précisant un @groups dans l'entité
+            // Ou mieux, je ne demande la validation que pour les champs affichés en précisant un @groups dans l'entité
             'validation_groups' => ['constructors-filter']
         ]);
     }

@@ -15,15 +15,16 @@ class ConstructeurType extends AbstractType
         $builder
             ->add('name',TextType::class, [
                 'label' => 'le nom',
-                'empty_data' => '',])
+                'empty_data' => '',
+                ])
             ->add('country',TextType::class, [
                 'label' => 'le pays',
                 'empty_data' => '',
-            ])
+                ])
             ->add('site',TextType::class, [
                 'label' => "l'adresse du site",
                 'empty_data' => '',
-            ])
+                ])
         ;
     }
 
