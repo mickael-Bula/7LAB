@@ -92,6 +92,7 @@ class VoitureController extends AbstractController
             $this->cache->delete("vehicles");
 
             // ajout d'un log dans le fichier /var/log/dev.log
+            // NOTE : je précise que les champs concernés par la sérialisation appartiennent au groupe 'car-edit'
             $jsonContent = $serializer->serialize($voiture, 'json', ['groups' => 'car-edit']);
             $logger->info($jsonContent);
 
