@@ -16,12 +16,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ConstructeurChoiceType extends AbstractType
 {
-    // injection du repository pour pouvoir afficher la liste des constructeurs
-    private $constructeurRepository;
-
-    public function __construct(ConstructeurRepository $constructeurRepository)
+    public function __construct(private readonly ConstructeurRepository $constructeurRepository)
     {
-        $this->constructeurRepository = $constructeurRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

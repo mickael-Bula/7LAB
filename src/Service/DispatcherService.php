@@ -9,14 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DispatcherService implements EventSubscriberInterface
 {
-    /**
-     * @var VoitureRepository
-     */
-    private $voitureRepository;
-
-    public function __construct(VoitureRepository $voitureRepository)
+    public function __construct(private readonly VoitureRepository $voitureRepository)
     {
-        $this->voitureRepository = $voitureRepository;
     }
 
     public static function getSubscribedEvents(): array
@@ -24,7 +18,7 @@ class DispatcherService implements EventSubscriberInterface
         return ['filters' => 'onFilters'];
     }
 
-    public function onFilters(GenericEvent $event)
+    public function onFilters(GenericEvent $event): void
     {
         /**
          * Je précise que ma variable est un objet Request pour bénéficier de l'auto-complétion
