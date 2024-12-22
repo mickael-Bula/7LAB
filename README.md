@@ -1,4 +1,8 @@
-# Utilisation du design pattern Observer avec l'event subscriber de Symfony
+## Accès à l'appli via Laragon
+
+Avec le virtual host automatique : http://7lab.local/
+
+## Utilisation du design pattern Observer avec l'event subscriber de Symfony
 
 SOURCE : Symfony 5, Etienne LANGLET, p. 275 et suiv.
 
