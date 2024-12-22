@@ -14,23 +14,20 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 
-/**
- * @Route("/voiture")
- */
+#[Route(path: '/voiture')]
 class VoitureController extends AbstractController
 {
-    /** @var CacheInterface $cache Injection du cache dans le constructeur */
-    private $cache;
-
-    public function __construct(CacheInterface $cache)
+    public function __construct(
+        /** @var CacheInterface $cache Injection du cache dans le constructeur */
+        private readonly CacheInterface $cache
+    )
     {
-        $this->cache = $cache;
     }
 
     /**
-     * @Route("/new", name="app_voiture_new", methods={"GET", "POST"})
      * @throws InvalidArgumentException
      */
+    #[Route(path: '/new', name: 'app_voiture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, VoitureRepository $voitureRepository): Response
     {
         $voiture = new Voiture();
@@ -53,15 +50,13 @@ class VoitureController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_voiture_show", methods={"GET"})
      * @throws InvalidArgumentException
      */
+    #[Route(path: '/{id}', name: 'app_voiture_show', methods: ['GET'])]
     public function show(Voiture $voiture, VoitureRepository $voitureRepository): Response
     {
         // récupération en cache d'un véhicule à partir de son Id
-        $vehicle = $this->cache->get('vehicle' . $voiture->getId(), function() use ($voitureRepository, $voiture) {
-            return $voitureRepository->findOneBy(["id" => $voiture->getId()]);
-        });
+        $vehicle = $this->cache->get('vehicle' . $voiture->getId(), fn() => $voitureRepository->findOneBy(["id" => $voiture->getId()]));
 
         return $this->render('voiture/show.html.twig', [
             'voiture' => $vehicle,
@@ -69,9 +64,9 @@ class VoitureController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="app_voiture_edit", methods={"GET", "POST"})
      * @throws InvalidArgumentException
      */
+    #[Route(path: '/{id}/edit', name: 'app_voiture_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request,
                          Voiture $voiture,
                          VoitureRepository $voitureRepository,
@@ -106,9 +101,9 @@ class VoitureController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_voiture_delete", methods={"POST"})
      * @throws InvalidArgumentException
      */
+    #[Route(path: '/{id}', name: 'app_voiture_delete', methods: ['POST'])]
     public function delete(Request $request, Voiture $voiture, VoitureRepository $voitureRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$voiture->getId(), $request->request->get('_token'))) {

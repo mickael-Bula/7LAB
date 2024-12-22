@@ -7,68 +7,50 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=VoitureRepository::class)
- */
+#[ORM\Entity(repositoryClass: VoitureRepository::class)]
 class Voiture
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     * @Groups("car-edit")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    #[Groups('car-edit')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank(message="Veuillez saisir un modèle pour le véhicule")
-     * @Groups("car-edit")
-     */
+    #[ORM\Column(type: 'string', length: 100)]
+    #[Assert\NotBlank(message: 'Veuillez saisir un modèle pour le véhicule')]
+    #[Groups('car-edit')]
     private $model;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Assert\Type(type="float", message = "La valeur {{ value }} doit être de type {{ type }}")
-     * @Assert\NotBlank(message="Veuillez saisir la longueur du véhicule")
-     * @Groups("car-edit")
-     */
+    #[ORM\Column(type: 'float')]
+    #[Assert\Type(type: 'float', message: 'La valeur {{ value }} doit être de type {{ type }}')]
+    #[Assert\NotBlank(message: 'Veuillez saisir la longueur du véhicule')]
+    #[Groups('car-edit')]
     private $length;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="Veuillez saisir une largeur pour le véhicule")
-     * @Groups("car-edit")
-     */
+    #[ORM\Column(type: 'float')]
+    #[Assert\NotBlank(message: 'Veuillez saisir une largeur pour le véhicule')]
+    #[Groups('car-edit')]
     private $width;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="Veuillez renseigner le poids du véhicule")
-     * @Groups("car-edit")
-     */
+    #[ORM\Column(type: 'float')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner le poids du véhicule')]
+    #[Groups('car-edit')]
     private $weight;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\Type(type="integer", message = "La valeur {{ value }} doit être de type {{ type }}")
-     * @Assert\NotBlank(message="Veuillez le nombre de places assises")
-     * @Groups("car-edit")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[Assert\Type(type: 'integer', message: 'La valeur {{ value }} doit être de type {{ type }}')]
+    #[Assert\NotBlank(message: 'Veuillez le nombre de places assises')]
+    #[Groups('car-edit')]
     private $seat;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     * @Groups("car-edit")
-     */
+    #[ORM\Column(type: 'string', length: 100)]
+    #[Groups('car-edit')]
     private $energy;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Constructeur::class, inversedBy="cars")
-     * @ORM\JoinColumn(nullable=false)
-     * @Groups("car-edit")
-     */
-    private $constructor;
+    #[ORM\ManyToOne(targetEntity: Constructeur::class, inversedBy: 'cars')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups('car-edit')]
+    private ?Constructeur $constructor;
 
     public function getId(): ?int
     {

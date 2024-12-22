@@ -16,23 +16,21 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class HomeController extends AbstractController
 {
-    /** @var CacheInterface $cache Injection du cache dans le constructeur */
-    private $cache;
-    /**
-     * @var EventDispatcherInterface $eventDispatcher Utilisation de l'eventDispatcher pour alléger le controller
-     */
-    private $eventDispatcher;
-
-    public function __construct(CacheInterface $cache, EventDispatcherInterface $eventDispatcher)
+    public function __construct(
+        /** @var CacheInterface $cache Injection du cache dans le constructeur */
+        private readonly CacheInterface $cache,
+        /**
+         * @var EventDispatcherInterface $eventDispatcher Utilisation de l'eventDispatcher pour alléger le controller
+         */
+        private readonly EventDispatcherInterface $eventDispatcher
+    )
     {
-        $this->cache = $cache;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
-     * @Route("/", name="app_home", methods={"GET", "POST"})
      * @throws InvalidArgumentException
      */
+    #[Route(path: '/', name: 'app_home', methods: ['GET', 'POST'])]
     public function index(
         Request $request,
         VoitureRepository $voitureRepository,
@@ -40,12 +38,8 @@ class HomeController extends AbstractController
     ): Response
     {
         // Récupération du cache des véhicules et des constructeurs : si la clé n'est pas présente dans le cache, on lance la fonction de rappel en lui fournissant le repository
-        $vehicles = $this->cache->get('vehicles', function() use ($voitureRepository) {
-            return $voitureRepository->findAll();
-        });
-        $constructors = $this->cache->get('constructors', function() use ($constructeurRepository) {
-            return $constructeurRepository->findAll();
-        });
+        $vehicles = $this->cache->get('vehicles', fn() => $voitureRepository->findAll());
+        $constructors = $this->cache->get('constructors', fn() => $constructeurRepository->findAll());
 
         // définition de la variable $voitures pour la méthode GET (en GET aucun filtre n'étant activé, on récupère tous les véhicules)
         $voitures = $request->isMethod('GET') ? $vehicles : null;

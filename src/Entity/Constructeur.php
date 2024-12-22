@@ -9,45 +9,33 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=ConstructeurRepository::class)
- */
+#[ORM\Entity(repositoryClass: ConstructeurRepository::class)]
 class Constructeur
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     * @Groups("car-edit")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    #[Groups('car-edit')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank(message="Veuillez saisir un nom")
-     * @Groups({ "car-edit", "constructors-filter" })
-     */
+    #[ORM\Column(type: 'string', length: 100)]
+    #[Assert\NotBlank(message: 'Veuillez saisir un nom')]
+    #[Groups(['car-edit', 'constructors-filter'])]
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank(message="Veuillez saisir un pays")
-     * @Groups("car-edit")
-     */
+    #[ORM\Column(type: 'string', length: 100)]
+    #[Assert\NotBlank(message: 'Veuillez saisir un pays')]
+    #[Groups('car-edit')]
     private $country;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     * @Assert\NotBlank(message="Veuillez saisir un nom de site")
-     * @Assert\Url(message="L'url {{ value }} n'est pas valide")
-     * @Groups("car-edit")
-     * @Assert\Url(relativeProtocol=true)
-     */
+    #[ORM\Column(type: 'string', length: 150)]
+    #[Assert\NotBlank(message: 'Veuillez saisir un nom de site')]
+    #[Assert\Url(message: "L'url {{ value }} n'est pas valide")]
+    #[Groups('car-edit')]
+    #[Assert\Url(relativeProtocol: true)]
     private $site;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Voiture::class, mappedBy="constructor")
-     */
+    #[ORM\OneToMany(targetEntity: Voiture::class, mappedBy: 'constructor')]
     private $cars;
 
     public function __construct()
@@ -116,11 +104,9 @@ class Constructeur
 
     public function removeCar(Voiture $car): self
     {
-        if ($this->cars->removeElement($car)) {
-            // set the owning side to null (unless already changed)
-            if ($car->getConstructor() === $this) {
-                $car->setConstructor(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->cars->removeElement($car) && $car->getConstructor() === $this) {
+            $car->setConstructor(null);
         }
 
         return $this;

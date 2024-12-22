@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use Exception;
 use App\Entity\Constructeur;
 use App\Entity\Voiture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -10,7 +11,7 @@ use Doctrine\Persistence\ObjectManager;
 class AppFixtures extends Fixture
 {
     // liste des constructeurs
-    public $constructors = [
+    public array $constructors = [
         ['Renault', 'France', ['Clio', 'Mégane', 'Scénic']],
         ['Peugeot', 'France', ['308', '3008', '2008']],
         ['Dacia', 'France', ['Sandero', 'Duster']],
@@ -20,30 +21,34 @@ class AppFixtures extends Fixture
     ];
 
     // liste des carburants
-    public $fuels = [
+    public array $fuels = [
         'sans plomb',
         'diesel',
         'électrique',
     ];
 
-    public $vehicles = [];
-    public $fixtureBrands = [];
+    public array $vehicles = [];
+    
+    public array $fixtureBrands = [];
 
-    public function getConstructors()
+    public function getConstructors(): void
     {
         // création des constructeurs
         foreach ($this->constructors as $constructor) {
             $constructeur = new Constructeur();
             $constructeur->setName($constructor[0]);
             $constructeur->setCountry($constructor[1]);
-            $site = 'https://' . strtolower($constructor[0]) . '.com';
+            $site = 'https://' . strtolower((string) $constructor[0]) . '.com';
             $constructeur->setSite($site);
 
             $this->fixtureBrands[] = $constructeur;
         }
     }
 
-    public function getVehicles()
+    /**
+     * @throws Exception
+     */
+    public function getVehicles(): void
     {
         // création de 10 véhicules
         for ($i=0; $i < 10; $i++) {
@@ -58,17 +63,17 @@ class AppFixtures extends Fixture
             $brand = $this->getConstructorObjectFromName($this->fixtureBrands, $constructor);
             $voiture->setConstructor($brand);
             $voiture->setEnergy($this->fuels[array_rand($this->fuels)]);
-            $voiture->setSeat(mt_rand(4, 5));
-            $voiture->setLength(mt_rand(350, 480) / 100);
-            $voiture->setWidth(mt_rand(160, 190) / 100);
-            $voiture->setWeight(mt_rand(1250, 1500));
+            $voiture->setSeat(random_int(4, 5));
+            $voiture->setLength(random_int(350, 480) / 100);
+            $voiture->setWidth(random_int(160, 190) / 100);
+            $voiture->setWeight(random_int(1250, 1500));
 
             $this->vehicles[] = $voiture;
         }
     }
 
     /** Méthode retournant aléatoirement un constructeur */
-    function getModelFromArray(array $array): array
+    public function getModelFromArray(array $array): array
     {
         // on récupère aléatoirement un constructeur
         $constructor = $array[array_rand($array)];
@@ -81,9 +86,9 @@ class AppFixtures extends Fixture
     }
 
     /**
-     * @param Constructeur[]
+     * @param Constructeur[] $constructorList
      * @param string $name
-     * @return Constructeur|void
+     * @return Constructeur
      */
     public function getConstructorObjectFromName(array $constructorList, string $name): Constructeur
     {
@@ -94,6 +99,7 @@ class AppFixtures extends Fixture
                 break;
             }
         }
+        
         return $result;
     }
 

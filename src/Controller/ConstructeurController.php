@@ -12,29 +12,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Cache\CacheInterface;
 
-/**
- * @Route("/constructeur")
- */
+#[Route(path: '/constructeur')]
 class ConstructeurController extends AbstractController
 {
-    /** @var CacheInterface $cache */
-    private $cache;
-
-    public function __construct(CacheInterface $cache)
+    public function __construct(private readonly CacheInterface $cache)
     {
-        $this->cache = $cache;
     }
 
     /**
-     * @Route("/", name="app_constructeur_index", methods={"GET"})
      * @throws InvalidArgumentException
      */
+    #[Route(path: '/', name: 'app_constructeur_index', methods: ['GET'])]
     public function index(ConstructeurRepository $constructeurRepository): Response
     {
         // on retourne le contenu du cache soit directement, soit après avoir récupéré auprès de Doctrine si le cache est vide
-        $constructors = $this->cache->get('constructors', function() use ($constructeurRepository) {
-            return $constructeurRepository->findAll();
-        });
+        $constructors = $this->cache->get('constructors', fn() => $constructeurRepository->findAll());
 
         return $this->render('constructeur/index.html.twig', [
             'constructeurs' => $constructors,
@@ -42,9 +34,9 @@ class ConstructeurController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="app_constructeur_new", methods={"GET", "POST"})
      * @throws InvalidArgumentException
      */
+    #[Route(path: '/new', name: 'app_constructeur_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ConstructeurRepository $constructeurRepository): Response
     {
         $constructeur = new Constructeur();
@@ -72,9 +64,7 @@ class ConstructeurController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="app_constructeur_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'app_constructeur_show', methods: ['GET'])]
     public function show(Constructeur $constructeur): Response
     {
         return $this->render('constructeur/show.html.twig', [
@@ -83,9 +73,9 @@ class ConstructeurController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="app_constructeur_edit", methods={"GET", "POST"})
      * @throws InvalidArgumentException
      */
+    #[Route(path: '/{id}/edit', name: 'app_constructeur_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Constructeur $constructeur, ConstructeurRepository $constructeurRepository): Response
     {
         $form = $this->createForm(ConstructeurType::class, $constructeur);
@@ -110,9 +100,9 @@ class ConstructeurController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_constructeur_delete", methods={"POST"})
      * @throws InvalidArgumentException
      */
+    #[Route(path: '/{id}', name: 'app_constructeur_delete', methods: ['POST'])]
     public function delete(Request $request, Constructeur $constructeur, ConstructeurRepository $constructeurRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$constructeur->getId(), $request->request->get('_token'))) {

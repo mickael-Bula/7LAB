@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class AppFixturesTest extends TestCase
 {
-    public function testFixture()
+    public function testFixture(): void
     {
         $fixture = new AppFixtures();
 
