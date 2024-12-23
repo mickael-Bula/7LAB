@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
 use Rector\Symfony\Set\SymfonySetList;
+use Rector\Set\ValueObject\LevelSetList;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -12,17 +13,22 @@ return RectorConfig::configure()
                     __DIR__ . '/src',
                     __DIR__ . '/tests',
                 ])
-    // uncomment to reach your current PHP version
+    // Remplace les annotations par des attributs PHP
+    ->withAttributesSets(
+        symfony:    true,
+        doctrine:   true,
+        sensiolabs: true,
+    )
+    // Règles supplémentaires pour améliorer la qualité du code
     ->withPreparedSets(
         deadCode:           true,
         codeQuality:        true,
         codingStyle:        true,
         typeDeclarations:   true,
         earlyReturn:        true,
-        symfonyCodeQuality: true
+        symfonyCodeQuality: true,
     )
-    ->withSets([
-                   SymfonySetList::SYMFONY_60,
-               ]
-    );
-
+     // Les méthodes suivantes ne sont à utiliser qu'une fois par montée de version
+    // ->withSets([LevelSetList::UP_TO_PHP_81,])
+    // ->withSets([SymfonySetList::SYMFONY_60,])
+    ;

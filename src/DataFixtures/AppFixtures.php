@@ -87,8 +87,6 @@ class AppFixtures extends Fixture
 
     /**
      * @param Constructeur[] $constructorList
-     * @param string $name
-     * @return Constructeur
      */
     public function getConstructorObjectFromName(array $constructorList, string $name): Constructeur
     {
