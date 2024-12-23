@@ -3,10 +3,10 @@
 namespace App\Security;
 
 use Exception;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Security;
@@ -23,15 +23,17 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator, private FlashBagInterface $bag)
+    private RequestStack $requestStack;
+
+    public function __construct(private readonly UrlGeneratorInterface $urlGenerator, RequestStack $requestStack)
     {
+        $this->requestStack = $requestStack;
     }
 
     public function authenticate(Request $request): Passport
     {
         $email = $request->request->get('email', '');
-
-        $request->getSession()->set(Security::LAST_USERNAME, $email);
+        $this->requestStack->getCurrentRequest()?->getSession()->set(Security::LAST_USERNAME, $email);
 
         return new Passport(
             new UserBadge($email),
@@ -47,14 +49,14 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+        $session = $this->requestStack->getCurrentRequest()?->getSession();
+        if ($targetPath = $this->getTargetPath($session, $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
-        $this->bag->add('success', 'Vous êtes connecté');
+        $session->getFlashBag()->add('success', 'Vous êtes connecté');
 
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
-        // throw new Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl(Request $request): string
